@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+</head>
+<body>
+<br>
+<br>
+<br>
+<a href="/autoservice/">Перейти на главную</a>.
+<br>
+<br>
+<br>
+<br>
+<br>
+
+Добавить машину
+<div class="column">
+    <form action="#" th:action="@{/autoservice/createCar/}" th:object="${car}"
+          method="post">
+        <table>
+            <tr>
+                <td>Регистрационный номер:</td>
+                <td><input type="text" th:field="*{regNumber}"></td>
+            </tr>
+            <tr>
+                <td>Дата выпуска:</td>
+                <td><input type="text" th:field="*{releaseDate}"></td>
+            </tr>
+            <div th:if="${#fields.hasAnyErrors()}">
+                <ul>
+                    <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+                </ul>
+            </div>
+            <tr>
+                <td>
+
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </td>
+            </tr>
+        </table>
+</form>
+</div>
+<br>
+<br>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Главное меню</title>
+</head>
+<body>
+<br>
+<br>
+<a href="/autoservice/">Перейти на главную</a>.
+<br>
+<br>
+Машины владельца:
+<table>
+    <thead>
+    <tr>
+        <th> id</th>
+        <th> Регистрационный номер </th>
+        <th> Дата выпуска </th>
+        <th> Опция </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="car : ${carsById}">
+        <td><span th:text="${car.id}"></span></td>
+        <td><span th:text="${car.regNumber}"></span></td>
+        <td><span th:text="${car.releaseDate}"></span></td>
+        <td>
+            <a href = "index.html" th:href =
+                    "@{{id}/removeCar/{carId}(id=${id},carId=${car.id})}">
+                <button name = "cancel">Удалить машину</button>
+            </a>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+<br>
+<br>
+<br>
+<br>
+Доступные машины для покупки:
+<table>
+    <thead>
+    <tr>
+        <th> id</th>
+        <th> Регистрационный номер </th>
+        <th> Дата выпуска </th>
+        <th> Опция </th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="car : ${carsByNotId}">
+        <td><span th:text="${car.id}"></span></td>
+        <td><span th:text="${car.regNumber}"></span></td>
+        <td><span th:text="${car.releaseDate}"></span></td>
+
+        <td>
+            <a href = "index.html" th:href =
+                    "@{{id}/addCar/{carId}(id=${id},carId=${car.id})}">
+                <button name = "cancel">Добавить машину</button>
+            </a>
+        </td>
+        <td>
+
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+<br>
+<br>
+
+
+</body>
+</html>

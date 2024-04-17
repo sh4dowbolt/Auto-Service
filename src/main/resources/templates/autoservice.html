@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+</head>
+<body>
+<br>
+<br>
+<a href="/calculatePath/">Загрузка GPS лога</a>.
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<a href="/autoservice/createCar/">Меню создания автомобилей</a>.
+<br>
+<a href="/autoservice/createOwner/">Меню создания владельцев</a>.
+<br>
+<a href="/autoservice/createDealer/">Меню создания диллеров</a>.
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+Список владельцев
+<table>
+    <thead>
+    <tr>
+        <th> Iid </th>
+        <th> ФИО </th>
+        <th> Номер телефона </th>
+        <th> Email </th>
+        <th> Панелья управления авто</th>
+    </tr>
+    </thead>
+
+
+
+    <tbody>
+    <tr th:each="owner : ${owners}">
+        <td><span th:text="${owner.id}"></span></td>
+        <td><span th:text="${owner.initials}"></span></td>
+        <td><span th:text="${owner.number}"></span></td>
+        <td><span th:text="${owner.email}"></span></td>
+        <td>
+            <a href = "index.html" th:href = "@{controlPanelOfCars/{id}(id=${owner.id})}">
+                <button name = "cancel">Открыть панель</button>
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+Список диллеров:
+<table>
+    <thead>
+    <tr>
+        <th> id </th>
+        <th> Наименование организации </th>
+        <th> Email </th>
+        <th> ФИО представителя </th>
+        <th> Панелья управления клиентами</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="dealer : ${dealers}">
+        <td><span th:text="${dealer.id}"></span></td>
+        <td><span th:text="${dealer.name}"></span></td>
+        <td><span th:text="${dealer.email}"></span></td>
+        <td><span th:text="${dealer.initialsOfDealer}"></span></td>
+        <td>
+            <a href = "index.html" th:href = "@{controlPanelOfOwners/{id}(id=${dealer.id})}">
+                <button name = "cancel">Открыть панель</button>
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<br>
+<br>
+<br>
+
+<br>
+<br>
+<br>
+<br>
+</body>
+</html>

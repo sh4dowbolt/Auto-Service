@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+</head>
+<body>
+<br>
+<br>
+<a href="/autoservice/">Перейти на главную</a>.
+<section class="my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <h2>Загрузите лог</h2>
+                <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
+                <form method="post" th:action="@{/calculatePath/upload}" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input type="file" name="file" class="form-control-file">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Загрузить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+</section>
+<section class="my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <h2>Результат:</h2>
+                <p th:text="${ActualResult}" th:if="${ActualResult ne null}" class="alert alert-primary"></p>
+                <form method="get" th:action="@{/calculatePath/showResult}">
+                    <button type="submit" class="btn btn-primary">Произвести расчет</button>
+                    <div class="form-group">
+                    <td><span th:text="${Counting}"></span></td>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

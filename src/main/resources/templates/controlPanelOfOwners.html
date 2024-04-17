@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Панель управления</title>
+</head>
+<body>
+<br>
+<br>
+<a href="/autoservice/">Перейти на главную</a>.
+<br>
+<br>
+Владельцы автосалона
+<table>
+    <thead>
+    <tr>
+        <th> id</th>
+        <th> ФИО </th>
+        <th> Номер телефона </th>
+        <th> Email </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="owner : ${ownersById}">
+        <td><span th:text="${owner.id}"></span></td>
+        <td><span th:text="${owner.initials}"></span></td>
+        <td><span th:text="${owner.number}"></span></td>
+        <td><span th:text="${owner.email}"></span></td>
+        <td>
+            <a href = "index.html" th:href =
+                    "@{{id}/removeOwner/{OwnerId}(id=${id},OwnerId=${owner.id})}">
+                <button name = "cancel">Удалить владельца</button>
+            </a>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+
+
+
+<br>
+<br>
+<br>
+<br>
+Добавить владельцев диллеру:
+<table>
+    <thead>
+    <tr>
+        <th> Id</th>
+        <th> ФИО </th>
+        <th> Номер телефона </th>
+        <th> Email </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="owner : ${ownersByNotId}">
+        <td><span th:text="${owner.id}"></span></td>
+        <td><span th:text="${owner.initials}"></span></td>
+        <td><span th:text="${owner.number}"></span></td>
+        <td><span th:text="${owner.email}"></span></td>
+        <td>
+            <a href = "index.html" th:href =
+                    "@{{id}/addOwner/{OwnerId}(id=${id},OwnerId=${owner.id})}">
+                <button name = "cancel">Добавить владельца</button>
+            </a>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+<br>
+<br>
+
+Машины находящиеся в обслуживании у автодилера:
+<table>
+    <thead>
+    <tr>
+        <th> id</th>
+        <th> Регистрационный номер </th>
+        <th> Дата выпуска </th>
+        <th> Опция </th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="car : ${carsDealer}">
+        <td><span th:text="${car.id}"></span></td>
+        <td><span th:text="${car.regNumber}"></span></td>
+        <td><span th:text="${car.releaseDate}"></span></td>
+    </tr>
+    </tbody>
+</table>
+
+
+</body>
+</html>
