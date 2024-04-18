@@ -3,11 +3,12 @@ package com.agropro.testTask.service;
 import com.agropro.testTask.Entity.GPSPosition.GPSPosition;
 import com.agropro.testTask.Entity.GPSparser.GPSParser;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,10 +19,10 @@ import static java.lang.Math.*;
 public class CalculatePathService {
 
 
-    public List<String> readFromTheFile(String name) {
+    public List<String> readFromTheFile(String path) {
         ArrayList<String> readFromFile = new ArrayList<>();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/upload/"+name))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             String line;
             line = reader.readLine();
             while (line != null) {
@@ -51,6 +52,10 @@ public class CalculatePathService {
     }
 
     public double countPath(List<GPSPosition> preparedDataGGAType, List<GPSPosition> preparedDataVTGType) {
+
+        if(preparedDataVTGType.isEmpty() || preparedDataVTGType.isEmpty()) {
+            throw new IllegalArgumentException("Input data is empty");
+        }
 
         int correctionIndex= preparedDataGGAType.size() > preparedDataVTGType.size()
                 ? preparedDataGGAType.size()-preparedDataVTGType.size(): -(preparedDataVTGType.size() - preparedDataGGAType.size());

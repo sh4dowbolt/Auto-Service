@@ -39,6 +39,7 @@ public class FileController {
     @PostMapping("calculatePath/upload")
     public String uploadFile(@RequestParam("file")MultipartFile file,
                              RedirectAttributes attributes, Model model) {
+        Path path=null;
 
 
 
@@ -50,22 +51,26 @@ public class FileController {
 
     String fileName= StringUtils.cleanPath(file.getOriginalFilename());
     try {
-        Path path = Paths.get(UPLOAD_DIR+fileName);
+        path = Paths.get(UPLOAD_DIR+fileName);
         Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+
+
     } catch (IOException e) {
         e.printStackTrace();
     }
     attributes.addFlashAttribute("message","Успешно загружен "+fileName);
 
-    model.addAttribute("fileName", fileName);
 
         return "redirect:/calculatePath/";
     }
     // обработка и рассчет
     @GetMapping("calculatePath/showResult")
-    public String showResultOfFile(ModelMap model, @ModelAttribute("fileName") String fileName) {
+    public String showResultOfFile(ModelMap model, @ModelAttribute("path") Path path) {
 
-        List<String> dataFromFile = calculatePathService.readFromTheFile(fileName);
+
+
+
+        List<String> dataFromFile = calculatePathService.readFromTheFile(path.toString());
         List<GPSPosition> gpsPositions =
                 calculatePathService.parseDataFromFileToGPSPosition(dataFromFile);
         List<GPSPosition> ggaType = calculatePathService.prepareDataGGAType(gpsPositions);
