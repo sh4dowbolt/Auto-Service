@@ -99,18 +99,32 @@ class CalculatePathServiceTest {
 
     @Test
     void countPathThrowExceptionIfDataIsEmpty() {
-        Assertions.assertThrows(IllegalArgumentException.class, ()-> calculatePathService.countPath(getListGPSpositionGGA(), getListGPSpositionGGA()));
+
+        List<GPSPosition> listGPSpositionGGA = getListGPSpositionGGA();
+        listGPSpositionGGA.add(getGGAGpsPosition());
+
+        List<GPSPosition> listGPSpositionVTG = getListGPSpositionVTG();
+        listGPSpositionGGA.add(getVTGGpsPosition());
+
+        Assertions.assertAll(() -> {
+                    Assertions.assertThrows(IllegalArgumentException.class, ()-> calculatePathService.countPath(listGPSpositionGGA, getListGPSpositionGGA()));},
+                () -> { Assertions.assertThrows(IllegalArgumentException.class, ()-> calculatePathService.countPath(getListGPSpositionGGA(), listGPSpositionVTG));});
     }
-    static Stream<Arguments> getSomeData() {
-        return Stream.of(
-                Arguments.of(getListGPSpositionGGA(), getListGPSpositionVTG().add(getVTGGpsPosition())),
-                Arguments.of(getListGPSpositionGGA().add(getGGAGpsPosition()), getListGPSpositionVTG()),
-                Arguments.of(getListGPSpositionGGA().add(getGGAGpsPosition()), getListGPSpositionVTG().add(getVTGGpsPosition()))
-        );
+
+    @Test
+    void shouldCalculate() {
+
+        List<GPSPosition> listGPSpositionGGA = getListGPSpositionGGA();
+        listGPSpositionGGA.add(getGGAGpsPosition());
+        listGPSpositionGGA.add(getGGAGpsPosition());
+
+        List<GPSPosition> listGPSpositionVTG = getListGPSpositionVTG();
+        listGPSpositionVTG.add(getVTGGpsPosition());
+
+        double actualResult = calculatePathService.countPath(listGPSpositionGGA, listGPSpositionVTG);
+
+        org.assertj.core.api.Assertions.assertThat(actualResult).isNotNegative();
     }
-
-
-
 
 
 
@@ -131,12 +145,15 @@ class CalculatePathServiceTest {
 
     private static GPSPosition getGGAGpsPosition() {
         GPSPosition GGAtype= new GPSPosition();
+        GGAtype.lat=23.22;
+        GGAtype.lon=11.22;
         GGAtype.isGGA=true;
         return GGAtype;
     }
 
     private static GPSPosition getVTGGpsPosition() {
         GPSPosition VTGType= new GPSPosition();
+        VTGType.velocity=2;
         VTGType.isVTG=true;
         return VTGType;
     }
@@ -153,7 +170,6 @@ class CalculatePathServiceTest {
 
         return gpsPositionList;
     }
-
 
 
 
